@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Conect | Dashboard Financeiro para BPOs e Contabilidades</title>
+<meta name="description" content="Dashboard financeiro integrado ao Conta Azul para BPOs e contabilidades. Teste gratuito por 7 dias, 1 empresa, sem cartão e sem compromisso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060505;
+  --bg2:#0e0e0e;
+  --bg3:#161616;
+  --card:#111111;
+  --green:#00C48C;
+  --green-soft:rgba(0,196,140,.12);
+  --blue:#0D6EFD;
+  --red:#FF4D6D;
+  --yellow:#FFB800;
+  --text:#EEEEEE;
+  --muted:#A7A7A7;
+  --soft:#6F6F6F;
+  --border:rgba(255,255,255,.09);
+  --border-green:rgba(0,196,140,.3);
+  --font:'DM Sans',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+.nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:50;background:rgba(6,5,5,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:var(--max);margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.4px;}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:var(--green);color:#060505;display:grid;place-items:center;font-weight:900;}
+.logo span{color:var(--green);}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted);}
+.nav-links a:hover{color:var(--text);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:13px 22px;font-weight:800;font-size:15px;transition:.18s ease;border:1px solid transparent;cursor:pointer;}
+.btn-primary{background:var(--green);color:#060505;box-shadow:0 0 0 0 rgba(0,196,140,.5);}
+.btn-primary:hover{transform:translateY(-2px);opacity:.92;}
+.btn-secondary{border-color:var(--border);background:rgba(255,255,255,.02);color:var(--text);}
+.btn-secondary:hover{background:var(--bg3);border-color:rgba(255,255,255,.18);}
+.btn-small{padding:9px 15px;font-size:13px;border-radius:8px;}
+.hero{position:relative;min-height:100vh;padding:150px 24px 80px;display:flex;align-items:center;overflow:hidden;}
+.hero:before{content:'';position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,140,.12),transparent 62%);top:-310px;left:50%;transform:translateX(-50%);pointer-events:none;}
+.hero-inner{position:relative;max-width:var(--max);margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--green);background:var(--green-soft);border:1px solid var(--border-green);border-radius:999px;padding:7px 14px;margin-bottom:24px;}
+.badge:before{content:'●';font-size:10px;}
+h1{font-size:clamp(42px,6vw,72px);line-height:1.02;letter-spacing:-3px;font-weight:900;margin-bottom:24px;}
+h1 em{font-style:normal;color:var(--green);}
+.hero-sub{font-size:20px;color:var(--muted);font-weight:300;max-width:620px;margin-bottom:34px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px;}
+.proof{display:flex;gap:18px;flex-wrap:wrap;color:var(--soft);font-family:var(--mono);font-size:12px;}
+.proof span:before{content:'✓ ';color:var(--green);}
+.mock{background:linear-gradient(180deg,#141414,#0b0b0b);border:1px solid var(--border);border-radius:22px;padding:18px;box-shadow:0 28px 80px rgba(0,0,0,.42);}
+.mock-top{display:flex;justify-content:space-between;align-items:center;padding:8px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.mock-title{font-weight:800;color:var(--green);}
+.mock-pill{font-family:var(--mono);font-size:10px;color:var(--yellow);border:1px solid rgba(255,184,0,.25);background:rgba(255,184,0,.08);padding:5px 9px;border-radius:999px;}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+.kpi{background:#1a1a1a;border:1px solid var(--border);border-radius:14px;padding:16px;}
+.kpi-label{font-family:var(--mono);font-size:10px;color:var(--soft);text-transform:uppercase;margin-bottom:6px;}
+.kpi-value{font-size:25px;font-weight:900;letter-spacing:-1px;}
+.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.yellow{color:var(--yellow)}
+.chart{height:150px;background:#1a1a1a;border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:flex-end;gap:9px;}
+.bar{flex:1;background:linear-gradient(180deg,var(--green),rgba(0,196,140,.25));border-radius:8px 8px 2px 2px;min-height:24px;}
+section{padding:86px 24px;}
+.section-inner{max-width:var(--max);margin:0 auto;}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:12px;}
+h2{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-1.7px;font-weight:900;margin-bottom:16px;}
+.section-sub{font-size:18px;color:var(--muted);max-width:640px;font-weight:300;}
+.bg2{background:var(--bg2);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:42px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:42px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.card:hover{border-color:rgba(0,196,140,.25);}
+.card-icon{width:42px;height:42px;border-radius:12px;background:var(--green-soft);border:1px solid var(--border-green);display:grid;place-items:center;margin-bottom:16px;font-size:20px;}
+.card h3{font-size:18px;margin-bottom:8px;}
+.card p{color:var(--muted);font-size:14.5px;}
+.steps{margin-top:42px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.step{background:var(--card);border:1px solid var(--border-green);border-radius:16px;padding:22px;}
+.step-n{font-family:var(--mono);font-size:12px;color:var(--green);margin-bottom:14px;}
+.step h3{font-size:17px;margin-bottom:6px;}
+.step p{font-size:14px;color:var(--muted);}
+.offer{background:linear-gradient(135deg,#111,#0b0b0b);border:1px solid var(--border-green);border-radius:24px;padding:36px;margin-top:42px;display:grid;grid-template-columns:1fr .9fr;gap:28px;align-items:center;}
+.offer-badge{display:inline-flex;color:#060505;background:var(--green);font-family:var(--mono);font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px;margin-bottom:18px;}
+.offer-list{display:grid;gap:10px;color:var(--muted);margin-top:18px;}
+.offer-list div:before{content:'✓ ';color:var(--green);font-weight:900;}
+.price-box{background:#171717;border:1px solid var(--border);border-radius:18px;padding:26px;}
+.price-label{font-family:var(--mono);color:var(--soft);font-size:12px;text-transform:uppercase;margin-bottom:8px;}
+.price{font-size:58px;font-weight:900;letter-spacing:-3px;color:var(--green);line-height:1;}
+.price small{font-size:18px;color:var(--muted);letter-spacing:0;font-weight:500;}
+.price-note{color:var(--muted);font-size:14px;margin-top:12px;}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:42px;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;}
+.faq-item h3{font-size:16px;margin-bottom:7px;color:var(--text);}
+.faq-item p{font-size:14px;color:var(--muted);}
+.final{padding:96px 24px;text-align:center;background:radial-gradient(circle at center,rgba(0,196,140,.10),transparent 50%),var(--bg);}
+.final .section-sub{margin:0 auto 30px;}
+.footer{border-top:1px solid var(--border);padding:28px 24px;color:var(--soft);font-size:13px;}
+.footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mobile-only{display:none;}
+@media(max-width:900px){
+  .nav-links a:not(.nav-cta){display:none;}
+  .hero-inner,.offer{grid-template-columns:1fr;}
+  .grid-3,.grid-4,.steps,.faq{grid-template-columns:1fr;}
+  .mock{order:-1;}
+  h1{font-size:44px;letter-spacing:-1.8px;}
+  .hero{padding-top:120px;}
+  .price{font-size:46px;}
+}
+</style>
+</head>
+<body>
+<!-- CONFIGURAÇÃO RÁPIDA: substitua https://forms.gle/COLE-AQUI-O-LINK-DO-SEU-GOOGLE-FORMS pelo link real do seu Google Forms e 55SEUNUMERO pelo WhatsApp com DDD. -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#top"><div class="logo-mark">S</div>Staff<span>Conect</span></a>
+    <div class="nav-links">
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#preco">Preço</a>
+      <a class="btn btn-primary btn-small nav-cta" href="https://forms.gle/5HLPUnFKi9WP2VgJ8" target="_blank">Iniciar teste</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="badge">Dashboard financeiro para BPOs e Contabilidades</div>
+        <h1>Seu cliente pede a DRE. <em>Ela já está pronta.</em></h1>
+        <p class="hero-sub">Automatize a entrega de relatórios financeiros, elimine planilhas manuais e apresente DREs profissionais com dados integrados ao Conta Azul.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://forms.gle/5HLPUnFKi9WP2VgJ8" target="_blank">🚀 Testar grátis por 7 dias</a>
+          <a class="btn btn-secondary" href="https://wa.me/5585992858520?text=Olá,%20vim%20pelo%20site%20da%20Staff%20Conect%20e%20gostaria%20de%20conhecer%20o%20Dashboard%20Financeiro." target="_blank">✅ Falar com Especialista</a>
+        </div>
+        <div class="proof">
+          <span>1 empresa no teste</span>
+          <span>sem cartão</span>
+          <span>sem compromisso</span>
+          <span>Plano Fundador após o teste</span>
+        </div>
+      </div>
+      <div class="mock" id="demo">
+        <div class="mock-top">
+          <div class="mock-title">Staff Conect Dashboard</div>
+          <div class="mock-pill">● DEMO</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Receita Bruta</div><div class="kpi-value green">R$ 87,4k</div></div>
+          <div class="kpi"><div class="kpi-label">Despesas</div><div class="kpi-value red">R$ 54,8k</div></div>
+          <div class="kpi"><div class="kpi-label">Lucro</div><div class="kpi-value blue">R$ 32,6k</div></div>
+          <div class="kpi"><div class="kpi-label">Margem</div><div class="kpi-value yellow">37,3%</div></div>
+        </div>
+        <div class="chart" aria-label="Prévia visual do dashboard">
+          <div class="bar" style="height:44%"></div><div class="bar" style="height:58%"></div><div class="bar" style="height:52%"></div><div class="bar" style="height:78%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:92%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg2">
+    <div class="section-inner">
+      <div class="eyebrow">O problema</div>
+      <h2>Relatório manual não escala.</h2>
+      <p class="section-sub">Quanto mais clientes sua operação atende, mais tempo a equipe perde exportando dados, ajustando planilhas e montando DRE todo mês.</p>
+      <div class="grid-4">
+        <div class="card"><div class="card-icon">📤</div><h3>Exportações</h3><p>Dados saem do sistema e viram arquivos soltos.</p></div>
+        <div class="card"><div class="card-icon">📊</div><h3>Planilhas</h3><p>Horas gastas formatando e conferindo informações.</p></div>
+        <div class="card"><div class="card-icon">🧮</div><h3>DRE manual</h3><p>Montagem repetitiva e sujeita a falhas operacionais.</p></div>
+        <div class="card"><div class="card-icon">🔁</div><h3>Retrabalho</h3><p>O mesmo processo se repete para cada cliente.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="funcionalidades">
+    <div class="section-inner">
+      <div class="eyebrow">A solução</div>
+      <h2>Dashboard financeiro pronto para apresentar resultados.</h2>
+      <p class="section-sub">A Staff Conect conecta dados financeiros, organiza indicadores e entrega uma visão profissional para sua operação e seus clientes.</p>
+      <div class="grid-3">
+        <div class="card"><div class="card-icon">📊</div><h3>DRE automática</h3><p>Receitas, custos, despesas e resultado organizados em uma visão clara.</p></div>
+        <div class="card"><div class="card-icon">🔗</div><h3>Integração Conta Azul</h3><p>Dados conectados ao sistema financeiro para reduzir exportações manuais.</p></div>
+        <div class="card"><div class="card-icon">🏢</div><h3>Multiempresa</h3><p>Adicione empresas conforme sua carteira cresce, pagando por empresa ativa.</p></div>
+        <div class="card"><div class="card-icon">📈</div><h3>Indicadores</h3><p>Margem, faturamento, despesas, lucro e comparativos para leitura rápida.</p></div>
+        <div class="card"><div class="card-icon">🔎</div><h3>Detalhamento</h3><p>Visualize categorias e acompanhe a composição dos resultados.</p></div>
+        <div class="card"><div class="card-icon">⚙️</div><h3>Ativação assistida</h3><p>Após a contratação, liberamos personalização, ajustes necessários e múltiplas empresas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg2" id="como-funciona">
+    <div class="section-inner">
+      <div class="eyebrow">Como funciona</div>
+      <h2>Teste rápido, sem travas e sem compromisso.</h2>
+      <p class="section-sub">O teste é simples para você validar o valor do dashboard sem precisar assumir contrato no primeiro contato.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><h3>Solicite o teste</h3><p>Preencha o formulário rápido e informe a empresa que deseja testar.</p></div>
+        <div class="step"><div class="step-n">02</div><h3>Ative a integração</h3><p>Você receberá o e-mail para criar um usuário financeiro no Conta Azul.</p></div>
+        <div class="step"><div class="step-n">03</div><h3>Use por 7 dias</h3><p>Explore o dashboard padrão com 1 empresa, sem cartão e sem compromisso.</p></div>
+        <div class="step"><div class="step-n">04</div><h3>Continue se gostar</h3><p>A partir do 8º dia, ative o Plano Fundador e adicione mais empresas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preco">
+    <div class="section-inner">
+      <div class="eyebrow">Oferta de lançamento</div>
+      <h2>Comece com 7 dias grátis.</h2>
+      <p class="section-sub">Teste com 1 empresa, sem cartão e sem compromisso. Depois, continue no Plano Fundador pagando apenas pelas empresas ativas.</p>
+      <div class="offer">
+        <div>
+          <div class="offer-badge">TESTE GRATUITO</div>
+          <h2>7 dias com 1 empresa.</h2>
+          <p class="section-sub">Durante o teste você valida o dashboard em um ambiente padrão Staff Conect, com configuração simplificada e foco em colocar a DRE em funcionamento rapidamente.</p>
+          <div class="offer-list">
+            <div>1 empresa liberada no teste</div>
+            <div>Ativação simplificada com instruções por e-mail</div>
+            <div>Sem cartão de crédito obrigatório</div>
+            <div>Sem compromisso de permanência</div>
+          </div>
+        </div>
+        <div class="price-box">
+          <div class="price-label">Plano Fundador após o 7º dia</div>
+          <div style="font-size:18px;color:var(--muted);margin-bottom:4px">De <span style="text-decoration:line-through;color:var(--soft)">R$ 49,90</span> por</div>
+          <div class="price">R$ 21,90 <small>/ empresa / mês</small></div>
+          <p class="price-note">Pagamento antecipado via Pix, boleto ou cartão.</p>
+          <p class="price-note">Após a contratação: sem taxa de implantação, com personalização, ajustes necessários, white-label e liberação para múltiplas empresas.</p>
+          <div style="margin-top:22px"><a class="btn btn-primary" href="https://forms.gle/5HLPUnFKi9WP2VgJ8" target="_blank">Iniciar teste gratuito →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg2" id="faq">
+    <div class="section-inner">
+      <div class="eyebrow">FAQ</div>
+      <h2>Dúvidas frequentes</h2>
+      <div class="faq">
+        <div class="faq-item"><h3>Preciso informar cartão no teste?</h3><p>Não. O teste gratuito de 7 dias não exige cartão de crédito.</p></div>
+        <div class="faq-item"><h3>Quantas empresas posso testar?</h3><p>O teste gratuito libera 1 empresa. Após contratar, você pode adicionar outras empresas.</p></div>
+        <div class="faq-item"><h3>O teste tem personalização?</h3><p>O teste usa o ambiente padrão Staff Conect para validar rapidamente o dashboard. Personalização visual, white-label e ajustes específicos são liberados após a contratação.</p></div>
+        <div class="faq-item"><h3>Quando começa a cobrança?</h3><p>A cobrança começa apenas se você decidir continuar a partir do 8º dia, com pagamento antecipado.</p></div>
+        <div class="faq-item"><h3>Tem taxa de implantação?</h3><p>Na oferta de lançamento, não há taxa de implantação após a contratação.</p></div>
+        <div class="faq-item"><h3>Posso pagar por boleto ou Pix?</h3><p>Sim. O pagamento pode ser feito via Pix, boleto ou cartão.</p></div>
+        <div class="faq-item"><h3>Preciso criar usuário no Conta Azul?</h3><p>Sim. Para conectar a empresa do teste, você receberá um e-mail específico da Staff Conect para criar um usuário com acesso financeiro no Conta Azul.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="section-inner">
+      <div class="eyebrow">Comece agora</div>
+      <h2>Transforme relatórios manuais em uma entrega profissional.</h2>
+      <p class="section-sub">Teste por 7 dias com 1 empresa. Sem cartão, sem compromisso e sem complicação.</p>
+      <div class="hero-actions" style="justify-content:center;margin-bottom:0">
+        <a class="btn btn-primary" href="https://forms.gle/5HLPUnFKi9WP2VgJ8" target="_blank">🚀 Iniciar teste gratuito</a>
+        <a class="btn btn-secondary" href="https://wa.me/5585992858520?text=Ol%C3%A1%2C%20quero%20iniciar%20o%20teste%20gratuito%20do%20Dashboard%20Staff%20Conect" target="_blank">Falar no WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>Staff Conect · Processos inteligentes.</div>
+    <div>conect@staffconsult.com.br · © 2026 Staff Conect</div>
+  </div>
+</footer>
+</body>
+</html>
